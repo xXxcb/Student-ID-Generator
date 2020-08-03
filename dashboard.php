@@ -1,5 +1,12 @@
 <?php
+session_cache_limiter('private');
+$cache_limiter = session_cache_limiter();
+
+/* set the cache expire to 30 minutes */
+session_cache_expire(1);
+$cache_expire = session_cache_expire();
 session_start();
+
 if(empty($_SESSION['username'])) {
     // $message = "Please log in before you can continue.";
     header("Location: index.php");
@@ -11,9 +18,9 @@ if(empty($_SESSION['username'])) {
     <?php //echo "Welcome " . $_SESSION['username']; ?>
 
     <div class="container">
-      <div class="row">
+      <div class="row justify-content-center align-items-center">
         <div class="col">
-          <form action="javascript:void(0)" method="post" id="genId">
+          <form action="" method="post" name="genId" id="genId">
             <div class="form-row">
               <div class="col">
                 <input type="text" id="fname" name="fname" autocomplete="off" class="form-control" placeholder="Firstname">
@@ -66,14 +73,51 @@ if(empty($_SESSION['username'])) {
                 <input type="text" class="form-control" name="idNumber" id="idNumber" placeholder="Student's ID # will be generated here" readonly>
               </div>
             </div>
-            <input type="hidden" name="form_data" value="1" />
+            <!-- <input type="hidden" name="form_data" value="1" /> -->
             <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
             <button class="btn btn-outline-info btn-block" type="submit" value="submit" name="submit">Save Student Data  </button>
           </form>
         </div>
 
-      <div class="col">
-        2 of 2
+      <div class="col" style="overflow-y: auto">
+        <div style="height: 500px;">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">FirstName</th>
+                  <th scope="col">LastName</th>
+                  <th scope="col">ID #</th>
+                  <th scope="col">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+
+                    try {
+                      require_once('./engine/connect.php');
+                      $sth = $conn->prepare("SELECT * FROM s_data ");
+                      $sth->execute();
+                      $result = $sth->fetchAll();
+
+                    } catch (\Exception $e) {  }
+                    if($sth->rowCount()):
+                      foreach($result as $row) {
+                ?>
+                <tr>
+                  <td><?php echo $row['firstname']; ?></td>
+                  <td><?php echo $row['lastname']; ?></td>
+                  <td><?php echo $row['student_id']; ?></td>
+                  <td><?php echo $row['email']; ?></td>
+                </tr>
+              <?php }  ?>
+                 <?php endif; ?>
+              </tbody>
+
+            </table>
+        </div>
       </div>
     </div>
   </div>
@@ -155,21 +199,29 @@ if(empty($_SESSION['username'])) {
 
     $(document).ready(function($){
     // on submit...
-        $('#genId').submit(function(e){
+        $("#genId").submit(function(e){
 
             e.preventDefault();
-
+            var sendData = $(this).serialize();
             $.ajax({
                 type:"POST",
                 url: "./engine/heart.php",
-                data: $(this).serialize(), // get all form field value in serialize form
+                data: sendData,
+                // data: $(this).serialize(), // get all form field value in serialize form
                 success: function() {
                       Swal.fire ({
                               icon: 'success',
-                              title: 'Saved!',
-                              text: 'Student Data Saved Successfully!'
+                              title: 'Student Data Saved Successfully!',
+                              showConfirmButton: false,
+                              timer: 3000
                       })
-                      $('#genId')[0].reset();
+                      setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+
+
+                      // $('#genId')[0].reset();
+
                 },
                 error: function() {
                       Swal.fire ({
@@ -180,7 +232,6 @@ if(empty($_SESSION['username'])) {
                 }
             });
         });
-
     return false;
     });
 

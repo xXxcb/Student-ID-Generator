@@ -2,9 +2,7 @@
 
 
 
-if (!empty($_POST['username'])) {
-
-  echo $_POST['username'];
+if (!empty($_POST['fname'])) {
 
   $fname = check_input($_POST['fname']);
   $lname = check_input($_POST['lname']);
@@ -32,7 +30,7 @@ if (!empty($_POST['username'])) {
         $query->bindParam(':datee', $datee);
 
         $query->execute();
-
+        incremID();
 
       } catch(PDOException $error) {
           $message = $error->getMessage();
@@ -41,7 +39,6 @@ if (!empty($_POST['username'])) {
         }
 
 }
-
 
 if ($_GET['heart'] = "getID") {
 
@@ -65,25 +62,28 @@ if ($_GET['heart'] = "getID") {
 }
 
 
-// function incremID() {
-//   include_once ('connect.php');
-//
-//   try {
-//     // $conn->begingTransaction();
-//
-//     $query = $conn->prepare("UPDATE idNum SET nextAvailableiD = nextAvailableiD +1, time_modified = CURRENT_TIMESTAMP");
-//     $query->execute();
-//
-//     // $result = $query->fetch(PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//
-//     // $conn->rollback();
-//   } catch(PDOException $error) {
-//       $message = $error->getMessage();
-//       echo $message;
-//         die;
-//   }
-//
-// }
+function incremID() {
+
+
+  try {
+    include ('connect.php');
+
+
+    $query = $conn->prepare("UPDATE idNum SET nextAvailableiD = nextAvailableiD +1, time_modified = CURRENT_TIMESTAMP");
+    $query->execute();
+
+    // $result = $query->fetch(PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+  } catch(PDOException $error) {
+
+      $message = $error->getMessage();
+      echo $message;
+      die;
+  }
+
+}
+
 
 function check_input($data) {
       $data = trim($data);
