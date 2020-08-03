@@ -22,7 +22,7 @@ if (isset($_POST["login"])) {
           if ($result) {
               session_start();
               $success_message = "Logging in...";
-              $_SESSION['username'] = $result['firstname'];
+              $_SESSION['username'] = $result['user_name'];
               header("Location: dashboard.php");
           } else {
             $error_message = "Ooops! Wrong combination!";

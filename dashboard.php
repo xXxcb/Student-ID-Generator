@@ -13,21 +13,21 @@ if(empty($_SESSION['username'])) {
     <div class="container">
       <div class="row">
         <div class="col">
-          <form>
+          <form action="javascript:void(0)" method="post" id="genId">
             <div class="form-row">
               <div class="col">
-                <input type="text" id="fname" class="form-control" placeholder="Firstname">
+                <input type="text" id="fname" name="fname" autocomplete="off" class="form-control" placeholder="Firstname">
                 <small id="emailHelp" class="form-text text-muted">Enter Student's Firstname</small>
               </div>
               <div class="col">
-                <input type="text" id="lname" class="form-control" placeholder="Lastname">
+                <input type="text" id="lname" autocomplete="off" name="lname" class="form-control" placeholder="Lastname">
                 <small id="emailHelp" class="form-text text-muted">Enter Student's Lastname</small>
               </div>
             </div>
 
             <div class="form-row">
               <div class="col-md-6">
-                <select class="custom-select" id="campus">
+                <select class="custom-select" name="campus" id="campus">
                   <option selected>-- Campus --</option>
                   <option value="10">Main</option>
                   <option value="80">PCC</option>
@@ -43,7 +43,7 @@ if(empty($_SESSION['username'])) {
                 </select>
               </div>
               <div class="col-md-6">
-                <select class="custom-select" id="acad_year">
+                <select class="custom-select" name="acad_year" id="acad_year">
                   <option selected>Academic Year</option>
                   <option value="2020">20/2021</option>
                   <option value="2021">21/2022</option>
@@ -57,16 +57,18 @@ if(empty($_SESSION['username'])) {
             <div class="form-group row">
               <label for="staticEmail" class="col-sm-2 col-form-label">Email:</label>
               <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="@jts.edu.jm">
+                <input type="text" readonly class="form-control-plaintext" name="staticEmail" id="staticEmail" value="@jts.edu.jm">
               </div>
             </div>
             <div class="form-group row">
               <label for="inputPassword" class="col-sm-2 col-form-label">ID #: </label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="idNumber" placeholder="Student's ID # will be generated here" readonly>
+                <input type="text" class="form-control" name="idNumber" id="idNumber" placeholder="Student's ID # will be generated here" readonly>
               </div>
-            </div> <div id="result"> </div>
-            <button class="btn btn-outline-info btn-block" name="submit">Save Student Data  </button>
+            </div>
+            <input type="hidden" name="form_data" value="1" />
+            <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+            <button class="btn btn-outline-info btn-block" type="submit" value="submit" name="submit">Save Student Data  </button>
           </form>
         </div>
 
@@ -99,15 +101,12 @@ if(empty($_SESSION['username'])) {
       var campus = c.options[c.selectedIndex].value;
       $('#idNumber').val(campus.concat(year));
       getOutput();
-      //addID();
     });
 
     function addID(idFrDb) {
-
       var id = document.getElementById("idNumber").value;
       var compId = id.concat(00);
       $('#idNumber').val(compId.concat(typeof idFrDb));
-      //console.log(compId);
     }
 
     function getOutput() {
@@ -120,17 +119,17 @@ if(empty($_SESSION['username'])) {
     }
     // handles drawing an error message
     function drawError() {
-        alert('Bummer: there was an error!');
+      Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Could not load current ID from DB!'
+            })
     }
     // handles the response, adds the html
     function drawOutput(responseText) {
-        // var container = document.getElementById('result');
-        // container.innerHTML = responseText;
 
         var id = document.getElementById("idNumber").value;
-        // var compId = id.concat("00");
         $('#idNumber').val(id.concat(responseText));
-         //addID(responseText);
     }
     // helper function for cross-browser request object
     function getRequest(url, success, error) {
@@ -153,6 +152,38 @@ if(empty($_SESSION['username'])) {
         req.send(null);
         return req;
     }
+
+    $(document).ready(function($){
+    // on submit...
+        $('#genId').submit(function(e){
+
+            e.preventDefault();
+
+            $.ajax({
+                type:"POST",
+                url: "./engine/heart.php",
+                data: $(this).serialize(), // get all form field value in serialize form
+                success: function() {
+                      Swal.fire ({
+                              icon: 'success',
+                              title: 'Saved!',
+                              text: 'Student Data Saved Successfully!'
+                      })
+                      $('#genId')[0].reset();
+                },
+                error: function() {
+                      Swal.fire ({
+                              icon: 'error',
+                              title: 'Ooops!',
+                              text: 'Student Data not saved Successfully!'
+                      })
+                }
+            });
+        });
+
+    return false;
+    });
+
 
   </script>
   </body>
