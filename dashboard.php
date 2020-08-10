@@ -13,7 +13,7 @@ if(empty($_SESSION['username'])) {
 }
 ?>
 <?php include ('header.php'); ?>
-<?php //include ('nav.php'); ?>
+<?php include ('nav.php'); ?>
 
     <?php //echo "Welcome " . $_SESSION['username']; ?>
 
@@ -207,7 +207,6 @@ if(empty($_SESSION['username'])) {
                 type:"POST",
                 url: "./engine/heart.php",
                 data: sendData,
-                // data: $(this).serialize(), // get all form field value in serialize form
                 success: function() {
                       Swal.fire ({
                               icon: 'success',
