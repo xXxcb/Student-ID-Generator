@@ -48,6 +48,7 @@ if(empty($_SESSION['username'])) {
                   <option value="105">COS</option>
                   <option value="106">Miracle Tab</option>
                 </select>
+                <small id="campusHelp" class="form-text text-muted">Select Campus</small>
               </div>
               <div class="col-md-6">
                 <select class="custom-select" name="acad_year" id="acad_year">
@@ -56,6 +57,28 @@ if(empty($_SESSION['username'])) {
                   <option value="2021">21/2022</option>
                   <option value="2022">22/2023</option>
                 </select>
+                <small id="yearHelp" class="form-text text-muted">Select Academic Year</small>
+              </div>
+              <div class="col-md-6">
+                <select class="custom-select" name="prog" id="prog">
+                  <option selected>Programme</option>
+                  <option value="Bachelor of Social Work">BSW</option>
+                  <option value="Bachelor of Arts in Guidance Counsel">BAG&C</option>
+                  <option value="Bachelor of Arts Social Profesional Transformation">BASPT</option>
+                  <option value="Bachelor of Arts in General Studies">BAGS</option>
+                  <option value="Bachelor Music and Media">BAMM</option>
+                  <option value="Bachelor of Art in Theology">BATH</option>
+                  <option value="Bachelor of Arts in Biblical Studies">BABS</option>
+                  <option value="Master of Arts in Forensic Psychology">MA. Forensic Psychology</option>
+                  <option value="Master of Social Work">MSW</option>
+                  <option value="Master of Arts in Public Theology">MA. Public Theology</option>
+                  <option value="Master of Arts in Bible">MA. Bible</option>
+                  <option value="Certificate in Leadership and Ministry">Cert. Leadership</option>
+                  <option value="Certificate in Grief Management">Cert. Grief</option>
+                  <option value="Associate Degree in Leadership and Ministry">Asc. Leadership</option>
+                  <option value="Evangelical Training Association Certificate">Evangelical Training</option>
+                </select>
+                <small id="programmeHelp" class="form-text text-muted">Select Programme</small>
               </div>
             </div>
             <br/>

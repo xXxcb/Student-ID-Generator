@@ -8,6 +8,7 @@ if (!empty($_POST['fname'])) {
   $lname = check_input($_POST['lname']);
   $id    = check_input($_POST['idNumber']);
   $email = check_input($_POST['staticEmail']);
+  $prog = check_input($_POST['prog']);
   $acad_year = check_input($_POST['acad_year']);
   $user_name = $_POST['username'];
   $datee = date("yy-m-d h:i:sa");
@@ -21,11 +22,12 @@ if (!empty($_POST['fname'])) {
 
         include ('connect.php');
 
-        $query = $conn->prepare('CALL InsertStudent(:id, :fname, :lname, :email, :acad_year, :user_name)');
+        $query = $conn->prepare('CALL InsertStudent(:id, :fname, :lname, :prog, :email, :acad_year, :user_name)');
 
         $query->bindParam(':fname', $fname, PDO::PARAM_STR, 45);
         $query->bindParam(':lname', $lname, PDO::PARAM_STR, 45);
         $query->bindParam(':id', $id, PDO::PARAM_STR, 45);
+        $query->bindParam(':prog', $prog, PDO::PARAM_STR, 64);
         $query->bindParam(':email', $email, PDO::PARAM_STR, 64);
         $query->bindParam(':acad_year', $acad_year, PDO::PARAM_STR, 45);
         $query->bindParam(':user_name', $user_name, PDO::PARAM_STR, 45);
