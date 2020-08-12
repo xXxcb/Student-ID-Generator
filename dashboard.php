@@ -1,25 +1,23 @@
 <?php
-session_cache_limiter('private');
-$cache_limiter = session_cache_limiter();
+    session_cache_limiter('private');
+    $cache_limiter = session_cache_limiter();
 
-/* set the cache expire to 30 minutes */
-session_cache_expire(1);
-$cache_expire = session_cache_expire();
-session_start();
+    /* set the cache expire to 30 minutes */
+    session_cache_expire(1);
+    $cache_expire = session_cache_expire();
+    session_start();
 
-if(empty($_SESSION['username'])) {
-    // $message = "Please log in before you can continue.";
-    header("Location: index.php");
-}
+    if(empty($_SESSION['username'])) {
+        // $message = "Please log in before you can continue.";
+        header("Location: index.php");
+    }
 ?>
 <?php include ('header.php'); ?>
 <?php include ('nav.php'); ?>
 
-    <?php //echo "Welcome " . $_SESSION['username']; ?>
-
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
-        <div class="col">
+        <div class="col-5">
           <form action="" method="post" name="genId" id="genId">
             <div class="form-row">
               <div class="col">

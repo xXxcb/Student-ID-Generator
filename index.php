@@ -26,7 +26,7 @@ if (!empty($_SESSION['username'])) {
       </div>
 
       <div class="form-label-group">
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+        <input type="text" id="username" name="username" autocomplete="off" class="form-control" placeholder="Username" required autofocus>
         <label for="username">Username</label>
       </div>
 
@@ -40,7 +40,7 @@ if (!empty($_SESSION['username'])) {
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-outline-primary btn-block" name="login" type="login">Sign in</button>
+      <button class="btn btn-outline-info btn-block" name="login" type="login">Sign in</button>
       <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
     </form>
   </body>
