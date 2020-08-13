@@ -1,5 +1,5 @@
 <?php
-session_start();
+if(!isset($_SESSION)) { session_start(); }
 if (!empty($_SESSION['username'])) {
     header("Location: dashboard.php");
 }
@@ -9,6 +9,9 @@ if (!empty($_SESSION['username'])) {
     <?php include ('login.php'); ?>
     <form class="form-signin" method="post">
       <?php
+      global $error_message;
+      global $message;
+      global $success_message;
             if ($error_message != "") {
                 echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $error_message . '</div>';
             }

@@ -17,7 +17,7 @@ if (!empty($_POST['fname']) || !empty($_POST['lname'])) {
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
 
-session_start();
+  if(!isset($_SESSION)) { session_start(); }
 if(empty($_SESSION['username'])) {
 
 

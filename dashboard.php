@@ -5,7 +5,7 @@
     /* set the cache expire to 30 minutes */
     session_cache_expire(1);
     $cache_expire = session_cache_expire();
-    session_start();
+    if(!isset($_SESSION)) { session_start(); }
 
     if(empty($_SESSION['username'])) {
         // $message = "Please log in before you can continue.";
@@ -49,7 +49,7 @@
                 <small id="campusHelp" class="form-text text-muted">Select Campus</small>
               </div>
               <div class="col-md-6">
-                <select class="custom-select" name="acad_year" id="acad_year">
+                <select class="custom-select" name="acad_year" id="acad_year" data-toggle="tooltip_acad" data-placement="top" title="Please Select Academic Year">
                   <option selected>Academic Year</option>
                   <option value="2020">20/2021</option>
                   <option value="2021">21/2022</option>
@@ -58,7 +58,7 @@
                 <small id="yearHelp" class="form-text text-muted">Select Academic Year</small>
               </div>
               <div class="col-md-6">
-                <select class="custom-select" name="prog" id="prog">
+                <select class="custom-select" name="prog" id="prog" required>
                   <option selected>Programme</option>
                   <option value="Bachelor of Social Work">BSW</option>
                   <option value="Bachelor of Arts in Guidance Counsel">BAG&C</option>
@@ -101,7 +101,7 @@
         </div>
 
         <?php
-        session_start();
+        if(!isset($_SESSION)) { session_start(); }
         if ($_SESSION['username'] == 'studreg') {
             echo '<div class="col" hidden style="overflow-y: auto">';
         } else {
@@ -156,6 +156,7 @@
       $('#s_data').DataTable();
   } );
 
+    //Adds lastname to complete email
     $(document).on('keyup', '#lname', function() {
         var lname = this.value;
         var fname = document.getElementById("fname").value+".";
@@ -180,11 +181,20 @@
       getOutput();
     });
 
-    function addID(idFrDb) {
-      var id = document.getElementById("idNumber").value;
-      var compId = id.concat(00);
-      $('#idNumber').val(compId.concat(typeof idFrDb));
-    }
+    //Sets ID Number field to campus code
+    $("#campus").bind('change keyup', '#campus', function() {
+      var e = document.getElementById("campus");
+      var campus = e.options[e.selectedIndex].value;
+      $('#idNumber').val(campus);
+      document.getElementById('acad_year').focus();
+      $('[data-toggle="tooltip_acad"]').tooltip('show');
+    });
+
+    // function addID(idFrDb) {
+    //   var id = document.getElementById("idNumber").value;
+    //   var compId = id.concat(00);
+    //   $('#idNumber').val(compId.concat(typeof idFrDb));
+    // }
 
     function getOutput() {
       getRequest(
