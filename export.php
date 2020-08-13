@@ -73,7 +73,6 @@
     //     $('#s_data').DataTable();
     // } );
 
-
     //Reference the Table.
     var grid = document.getElementById("s_data");
 

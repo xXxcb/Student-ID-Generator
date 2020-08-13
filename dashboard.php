@@ -100,7 +100,16 @@
           </form>
         </div>
 
-      <div class="col" style="overflow-y: auto">
+        <?php
+        session_start();
+        if ($_SESSION['username'] == 'studreg') {
+            echo '<div class="col" hidden style="overflow-y: auto">';
+        } else {
+          echo '<div class="col" style="overflow-y: auto">';
+        }
+
+        ?>
+
         <div style="height: 500px;">
           <table class="table table-striped" id="s_data">
               <thead>
