@@ -102,7 +102,7 @@
 
       <div class="col" style="overflow-y: auto">
         <div style="height: 500px;">
-          <table class="table table-striped">
+          <table class="table table-striped" id="s_data">
               <thead>
                 <tr>
                   <th scope="col">FirstName</th>
@@ -143,6 +143,9 @@
     </div>
   </div>
   <script>
+  $(document).ready(function() {
+      $('#s_data').DataTable();
+  } );
 
     $(document).on('keyup', '#lname', function() {
         var lname = this.value;

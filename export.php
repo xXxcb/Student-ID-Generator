@@ -26,9 +26,9 @@
 
   <br/>
 
-  <div class="row" id="here">
+  <div class="row" id="here" style="overflow-y: auto; height: 600px;">
     <table class="table table-hover" id="s_data">
-        <thead class="thead-dark">
+        <thead class="thead-light">
           <tr>
             <th scope="col">Student ID</th>
             <th scope="col">First Name</th>
@@ -62,13 +62,17 @@
             <td><?php echo $row['programme']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <td><?php echo $row['acad_year']; ?></td>
-            <td><input id="sel" type="checkbox" /> </td>
+            <td><input id="sel" type="checkbox"/></td>
           </tr>
         <?php }  ?>
            <?php endif; ?>
         </tbody>
       </table>
     <script>
+    // $(document).ready(function() {
+    //     $('#s_data').DataTable();
+    // } );
+
 
     //Reference the Table.
     var grid = document.getElementById("s_data");
