@@ -69,13 +69,18 @@
         </tbody>
       </table>
     <script>
-        function myFunction() {
-              if (document.getElementById('sel').checked) {
-                        //Reference the Table.
-                        var grid = document.getElementById("s_data");
 
-                        //Reference the CheckBoxes in Table.
-                        var checkBoxes = grid.getElementsByTagName("INPUT");
+    //Reference the Table.
+    var grid = document.getElementById("s_data");
+
+    //Reference the CheckBoxes in Table.
+    var checkBoxes = grid.getElementsByTagName("INPUT");
+
+
+        function myFunction() {
+
+              if (checkBox()) {
+
 
                         datah = [];
 
@@ -135,6 +140,7 @@
 
                               //Clear CheckBoxes
                               location.reload();
+
                             }
                           }).then((result) => {
                             /* Read more about handling dismissals below */
@@ -150,8 +156,17 @@
                   text: 'You need to select something first!',
                   footer: '<a href>Not sure what to do?</a>'
                 })
+
               }
           }
+
+        function checkBox() {
+              for (var i = 0; i < checkBoxes.length; i++) {
+                      if (checkBoxes[i].checked) {
+                        return true;
+                      }
+                }
+            }
   </script>
   </div>
 </div>
