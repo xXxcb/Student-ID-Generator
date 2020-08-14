@@ -29,7 +29,7 @@
 
   <br/>
 
-  <div class="row" id="here" style="overflow-y: auto; height: 600px;">
+  <div class="row" id="here" style="overflow-y: auto; height: 500px;">
     <table class="table table-hover" id="s_data">
         <thead class="thead-light">
           <tr>
@@ -39,6 +39,7 @@
             <th scope="col">Programme</th>
             <th scope="col">Email</th>
             <th scope="col">Academic Year</th>
+            <th scope="col">Campus</th>
             <th scope="col">Select<th/>
           </tr>
         </thead>
@@ -50,7 +51,7 @@
 
               try {
                 require_once('./engine/connect.php');
-                $sth = $conn->prepare("SELECT * FROM s_data ");
+                $sth = $conn->prepare("SELECT * FROM s_data");
                 $sth->execute();
                 $result = $sth->fetchAll();
 
@@ -65,6 +66,7 @@
             <td><?php echo $row['programme']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <td><?php echo $row['acad_year']; ?></td>
+            <td><?php echo $row['campus']; ?></td>
             <td><input id="sel" type="checkbox"/></td>
           </tr>
         <?php }  ?>
@@ -81,13 +83,8 @@
 
     //Reference the CheckBoxes in Table.
     var checkBoxes = grid.getElementsByTagName("INPUT");
-
-
         function myFunction() {
-
               if (checkBox()) {
-
-
                         datah = [];
 
                         //Loop through the CheckBoxes.
@@ -102,12 +99,14 @@
                                 var lastname = row.cells[2].innerHTML;
                                 var programme = row.cells[3].innerHTML;
                                 var email = row.cells[4].innerHTML;
+                                var campus = row.cells[6].innerHTML;
 
                                 cont.id = id;
                                 cont.firstname = firstname;
                                 cont.lastname = lastname;
                                 cont.programme = programme;
                                 cont.email = email;
+                                cont.campus = campus;
 
                                 datah.push(cont);
                             }
@@ -140,7 +139,7 @@
                               objectExporter({
                                   exportable: datah,
                                   type: 'csv',
-                                  headers: ['Student ID', 'FirstName', 'LastName', 'Programme', 'Email'],
+                                  headers: ['Student ID', 'FirstName', 'LastName', 'Programme', 'Email', 'Campus'],
                                   fileName: moment().format('MMMM Do YYYY, h:mm:ss a')
                                 })
 

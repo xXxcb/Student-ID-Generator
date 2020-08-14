@@ -11,7 +11,7 @@ if (!empty($_POST['fname']) || !empty($_POST['lname'])) {
   $prog = check_input($_POST['prog']);
   $acad_year = check_input($_POST['acad_year']);
   $user_name = $_POST['username'];
-  $datee = date("yy-m-d h:i:sa");
+  $campus = assignProg($_POST['campus']);
 
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
@@ -29,7 +29,7 @@ if(empty($_SESSION['username'])) {
 
             include ('connect.php');
 
-            $query = $conn->prepare('CALL InsertStudent(:id, :fname, :lname, :prog, :email, :acad_year, :user_name)');
+            $query = $conn->prepare('CALL InsertStudent(:id, :fname, :lname, :prog, :email, :acad_year, :campus, :user_name)');
 
             $query->bindParam(':fname', $fname, PDO::PARAM_STR, 45);
             $query->bindParam(':lname', $lname, PDO::PARAM_STR, 45);
@@ -37,6 +37,7 @@ if(empty($_SESSION['username'])) {
             $query->bindParam(':prog', $prog, PDO::PARAM_STR, 64);
             $query->bindParam(':email', $email, PDO::PARAM_STR, 64);
             $query->bindParam(':acad_year', $acad_year, PDO::PARAM_STR, 45);
+            $query->bindParam(':campus', $campus, PDO::PARAM_STR, 45);
             $query->bindParam(':user_name', $user_name, PDO::PARAM_STR, 45);
 
             $query->execute();
@@ -70,10 +71,48 @@ if ($_GET['heart'] = "getID") {
 
 }
 
+function assignProg($code) {
+    switch ( $code ) {
+      case 10:
+        return "Main Campus";
+        break;
+      case 80:
+          return "PCC";
+          break;
+      case 70:
+          return "Moneague";
+          break;
+      case 20:
+          return "Mandeville";
+          break;
+      case 50:
+          return "Masters";
+          break;
+      case 40:
+          return "St. Lucia";
+          break;
+      case 60:
+          return "Montego Bay";
+          break;
+      case 55:
+          return "Special";
+          break;
+      case 15:
+          return "Indiv. Course";
+          break;
+      case 105:
+          return "COS";
+          break;
+      case 106:
+          return "Miracle Tab";
+          break;
+      default:
+          return "No Campus Selected.";
+    }
+}
 
+//Increments student number
 function incremID() {
-
-
   try {
     include ('connect.php');
 
@@ -89,7 +128,7 @@ function incremID() {
 
 }
 
-
+//Checks field inputs
 function check_input($data) {
       $data = trim($data);
       $data = stripslashes($data);
