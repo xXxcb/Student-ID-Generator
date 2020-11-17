@@ -61,12 +61,13 @@
                 <select class="custom-select" name="prog" id="prog" required>
                   <option selected>Programme</option>
                   <option value="Bachelor of Social Work">BSW</option>
-                  <option value="Bachelor of Arts in Guidance Counsel">BAG&C</option>
+                  <option value="Bachelor of Arts in Guidance Counselling">BAG&C</option>
                   <option value="Bachelor of Arts Social Profesional Transformation">BASPT</option>
                   <option value="Bachelor of Arts in General Studies">BAGS</option>
                   <option value="Bachelor Music and Media">BAMM</option>
-                  <option value="Bachelor of Art in Theology">BATH</option>
+                  <option value="Bachelor of Arts in Theology">BATH</option>
                   <option value="Bachelor of Arts in Biblical Studies">BABS</option>
+                  <option value="Bachelor in Applied Behavior Analysis">BABA</option>
                   <option value="Master of Arts in Forensic Psychology">MA. Forensic Psychology</option>
                   <option value="Master of Social Work">MSW</option>
                   <option value="Master of Arts in Public Theology">MA. Public Theology</option>
@@ -110,7 +111,7 @@
 
         ?>
 
-        <div style="height: 500px;">
+        <div>
           <table class="table table-striped" id="s_data">
               <thead>
                 <tr>
@@ -153,7 +154,9 @@
   </div>
   <script>
   $(document).ready(function() {
-      $('#s_data').DataTable();
+      $('#s_data').DataTable({
+            "bLengthChange": false
+          });
   } );
 
     //Adds lastname to complete email
